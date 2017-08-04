@@ -53,10 +53,6 @@ public class HotelBookFragment extends Fragment {
             destinationSpinner.setAdapter(adapter);
         }
 
-        NumberPicker npTotal = (NumberPicker) view.findViewById(R.id.np_fragment_hotel_book_total_guest);
-        npTotal.setMinValue(1);
-        npTotal.setMaxValue(10);
-
         NumberPicker npDuration = (NumberPicker) view.findViewById(R.id.np_fragment_hotel_book_duration);
         npDuration.setMinValue(1);
         npDuration.setMaxValue(10);

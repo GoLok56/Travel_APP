@@ -18,16 +18,7 @@ public class ProfileFragment extends Fragment {
 
     public static final String TITLE = "Profile";
 
-    private static ProfileFragment sInstance;
-
     public ProfileFragment() {}
-
-    public static ProfileFragment getInstance(){
-        if(sInstance == null){
-            sInstance = new ProfileFragment();
-        }
-        return sInstance;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

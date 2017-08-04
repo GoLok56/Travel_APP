@@ -16,7 +16,7 @@
     <string name="kid_label">Anak-anak</string>
     <string name="seat_class_label">Kelas</string>
     <string name="order_label">Pesan</string>
-    <string name="total_guest_label">Jumlah Tamu</string>
+    <string name="total_label">Jumlah</string>
     <string name="guest_label">Tamu</string>
     <string name="day_label">Hari</string>
     <string name="room_label">Kamar</string>
@@ -33,7 +33,9 @@
     <string name="fragment_profile_edit_profile_label">Edit Profile</string>
     <string name="fragment_profile_logout_label">Logout</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notif_icon_label">Notification Icon</string>
+    <string name="total_price_label">Total Harga</string>
+
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>

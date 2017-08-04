@@ -17,10 +17,25 @@ public class DBSchema {
     public static class TableNotifBook implements BaseColumns {
         public static final String TABLE_NAME = "notif";
         public static final String INFO_COLUMN = "info";
+        public static final String USERID_COLUMN = "user_id";
+        public static final String DATE_COLUMN = "date";
+        public static final String PRICE_COLUMN = "price";
     }
 
     public static class TableFlightBook implements BaseColumns {
         public static final String TABLE_NAME = "flight_book";
+        public static final String USERID_COLUMN = "user_id";
+        public static final String INFO_COLUMN = "info";
+    }
+
+    public static class TableHotelBook implements BaseColumns {
+        public static final String TABLE_NAME = "hotel_book";
+        public static final String USERID_COLUMN = "user_id";
+        public static final String INFO_COLUMN = "info";
+    }
+
+    public static class TableTrainBook implements BaseColumns {
+        public static final String TABLE_NAME = "train_book";
         public static final String USERID_COLUMN = "user_id";
         public static final String INFO_COLUMN = "info";
     }

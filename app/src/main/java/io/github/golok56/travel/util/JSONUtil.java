@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class JSONUtil {
@@ -15,6 +16,12 @@ public class JSONUtil {
     private static final String CITIES_FILE = "cities.json";
 
     private static final String SEAT_CLASS_FILE = "seat_class.json";
+
+    private static final String PRICE_FILE = "prices.json";
+
+    public static final String FLIGHT_TYPE = "flight";
+    public static final String TRAIN_TYPE = "train";
+    public static final String HOTEL_TYPE = "hotel";
 
     private static String read(Context context, String fileName) throws IOException {
         InputStream is = context.getAssets().open(fileName);
@@ -60,6 +67,31 @@ public class JSONUtil {
             ex.printStackTrace();
         }
         return classList;
+    }
+
+    public static String getPrice(Context context, String type, String seatClass,
+                                  String origin, String dest, int adultTotal, int kidTotal){
+        int adultPrice = 0, kidPrice = 0;
+        try {
+            String json = read(context, PRICE_FILE);
+            JSONObject root = new JSONObject(json);
+
+            JSONObject priceObj = root.getJSONObject("prices");
+            JSONObject typeObj = priceObj.getJSONObject(type);
+            JSONObject classObj = typeObj.getJSONObject(seatClass);
+            JSONObject originObj = classObj.getJSONObject(origin);
+            JSONObject destObj = originObj.getJSONObject(dest);
+            adultPrice = destObj.getInt("Dewasa");
+            kidPrice = destObj.getInt("Anak");
+        } catch (JSONException | IOException ex){
+            ex.printStackTrace();
+        }
+
+        int price = (adultTotal * adultPrice) + (kidTotal * kidPrice);
+
+        NumberFormat nf = NumberFormat.getCurrencyInstance(Formatter.LOCALE);
+
+        return nf.format(price);
     }
 
 }

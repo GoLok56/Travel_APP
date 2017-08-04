@@ -18,16 +18,7 @@ public class BookFragment extends Fragment {
 
     public static final String TITLE = "Book";
 
-    private static BookFragment sInstance;
-
     public BookFragment() {}
-
-    public static BookFragment getInstance(){
-        if(sInstance == null){
-            sInstance = new BookFragment();
-        }
-        return sInstance;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

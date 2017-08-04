@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/std_parent_padding">
+
+    <ImageView
+        android:id="@+id/img_item_list_notif_icon_notif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_item_list_notif_price_label"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/notif_icon_label"
+        android:src="@drawable/ic_priority_high_black_24dp" />
+
+    <TextView
+        android:id="@+id/tv_item_list_notif_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/std_margin"
+        android:layout_marginStart="@dimen/std_margin"
+        android:layout_toEndOf="@id/img_item_list_notif_icon_notif"
+        android:layout_toRightOf="@id/img_item_list_notif_icon_notif"
+        android:textColor="@android:color/black"
+        tools:text="17 Agustus 1945" />
+
+    <TextView
+        android:id="@+id/tv_item_list_notif_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_item_list_notif_date"
+        android:layout_marginLeft="@dimen/std_margin"
+        android:layout_marginStart="@dimen/std_margin"
+        android:layout_toEndOf="@id/img_item_list_notif_icon_notif"
+        android:layout_toRightOf="@id/img_item_list_notif_icon_notif"
+        tools:text="Berhasil melakukan book pada blablabla dari blabalbal menuju blablablabladengan blablabla dan blablablabla" />
+
+    <TextView
+        android:id="@+id/tv_item_list_notif_price_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_item_list_notif_description"
+        android:layout_marginLeft="@dimen/std_margin"
+        android:layout_marginStart="@dimen/std_margin"
+        android:layout_marginTop="@dimen/std_margin"
+        android:layout_toEndOf="@id/img_item_list_notif_icon_notif"
+        android:layout_toRightOf="@id/img_item_list_notif_icon_notif"
+        android:text="@string/total_price_label"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_item_list_notif_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_item_list_notif_description"
+        android:layout_marginTop="@dimen/std_margin"
+        android:textColor="@android:color/black"
+        tools:text="Rp. 200.000" />
+
+</RelativeLayout>

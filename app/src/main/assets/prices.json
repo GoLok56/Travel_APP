@@ -1,0 +1,141 @@
+{
+  "prices": {
+    "flight": {
+      "Ekonomi": {
+        "Jakarta": {
+          "Bogor": {
+            "Dewasa": 100000,
+            "Anak": 80000
+          },
+          "Bandung": {
+            "Dewasa": 200000,
+            "Anak": 180000
+          }
+        },
+        "Bogor": {
+          "Jakarta": {
+            "Dewasa": 100000,
+            "Anak": 80000
+          },
+          "Bandung": {
+            "Dewasa": 150000,
+            "Anak": 130000
+          }
+        },
+        "Bandung": {
+          "Jakarta": {
+            "Dewasa": 200000,
+            "Anak": 180000
+          },
+          "Bogor": {
+            "Dewasa": 150000,
+            "Anak": 130000
+          }
+        }
+      },
+      "Bisnis": {
+        "Jakarta": {
+          "Bogor": {
+            "Dewasa": 200000,
+            "Anak": 160000
+          },
+          "Bandung": {
+            "Dewasa": 400000,
+            "Anak": 360000
+          }
+        },
+        "Bogor": {
+          "Jakarta": {
+            "Dewasa": 400000,
+            "Anak": 160000
+          },
+          "Bandung": {
+            "Dewasa": 300000,
+            "Anak": 260000
+          }
+        },
+        "Bandung": {
+          "Jakarta": {
+            "Dewasa": 200000,
+            "Anak": 360000
+          },
+          "Bogor": {
+            "Dewasa": 300000,
+            "Anak": 260000
+          }
+        }
+      }
+    },
+    "hotel": {
+      "Jakarta": 300000,
+      "Bandung": 200000,
+      "Bogor": 100000
+    },
+    "train": {
+      "Ekonomi": {
+        "Jakarta": {
+          "Bogor": {
+            "Dewasa": 50000,
+            "Anak": 40000
+          },
+          "Bandung": {
+            "Dewasa": 100000,
+            "Anak": 90000
+          }
+        },
+        "Bogor": {
+          "Jakarta": {
+            "Dewasa": 50000,
+            "Anak": 40000
+          },
+          "Bandung": {
+            "Dewasa": 75000,
+            "Anak": 65000
+          }
+        },
+        "Bandung": {
+          "Jakarta": {
+            "Dewasa": 100000,
+            "Anak": 90000
+          },
+          "Bogor": {
+            "Dewasa": 75000,
+            "Anak": 65000
+          }
+        }
+      },
+      "Bisnis": {
+        "Jakarta": {
+          "Bogor": {
+            "Dewasa": 100000,
+            "Anak": 80000
+          },
+          "Bandung": {
+            "Dewasa": 200000,
+            "Anak": 180000
+          }
+        },
+        "Bogor": {
+          "Jakarta": {
+            "Dewasa": 100000,
+            "Anak": 80000
+          },
+          "Bandung": {
+            "Dewasa": 150000,
+            "Anak": 130000
+          }
+        },
+        "Bandung": {
+          "Jakarta": {
+            "Dewasa": 200000,
+            "Anak": 180000
+          },
+          "Bogor": {
+            "Dewasa": 150000,
+            "Anak": 130000
+          }
+        }
+      }
+    }
+  }
+}

@@ -20,7 +20,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         getSupportActionBar().setElevation(0);
 
-        User user = getIntent().getParcelableExtra(LoginActivity.USER_EXTRA);
+        final User user = getIntent().getParcelableExtra(LoginActivity.USER_EXTRA);
 
         ViewPager vp = (ViewPager) findViewById(R.id.vpager_activity_dashboard);
         TabLayout tab = (TabLayout) findViewById(R.id.tab_activity_dashboard);

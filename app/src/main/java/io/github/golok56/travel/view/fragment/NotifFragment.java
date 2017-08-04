@@ -1,36 +1,104 @@
 package io.github.golok56.travel.view.fragment;
 
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 import io.github.golok56.travel.R;
+import io.github.golok56.travel.adapter.NotificationAdapter;
+import io.github.golok56.travel.database.DBHelper;
+import io.github.golok56.travel.database.DBSchema;
+import io.github.golok56.travel.model.Notification;
+import io.github.golok56.travel.model.User;
+import io.github.golok56.travel.util.Formatter;
+import io.github.golok56.travel.view.activity.LoginActivity;
 
 public class NotifFragment extends Fragment {
 
     public static final String TITLE = "Notification";
 
-    private static NotifFragment sInstance;
+    private ListView mLvNotif;
+
+    private DBHelper mDb;
+
+    private Context mContext;
+
+    private int mUserId;
 
     public NotifFragment() {}
-
-    public static NotifFragment getInstance(){
-        if(sInstance == null){
-            sInstance = new NotifFragment();
-        }
-        return sInstance;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(R.string.hello_blank_fragment);
-        return textView;
+        return inflater.inflate(R.layout.fragment_notif, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mContext = getContext();
+        mDb = new DBHelper(mContext);
+
+        Bundle bundle = getArguments();
+        User user = bundle.getParcelable(LoginActivity.USER_EXTRA);
+        mUserId = 0;
+        if (user != null) {
+            mUserId = user.getId();
+        }
+
+        mLvNotif = (ListView) view.findViewById(R.id.lv_fragment_notif_list_notif);
+        refresh();
+    }
+
+    public void refresh(){
+        ArrayList<Notification> notifs = getNotifs(mUserId);
+
+        NotificationAdapter adapter = new NotificationAdapter(mContext, notifs);
+        mLvNotif.setAdapter(adapter);
+    }
+
+    private ArrayList<Notification> getNotifs(int userid){
+        SQLiteDatabase wdb = mDb.getWritableDatabase();
+        String[] column = {
+                DBSchema.TableNotifBook.DATE_COLUMN,
+                DBSchema.TableNotifBook.INFO_COLUMN,
+                DBSchema.TableNotifBook.PRICE_COLUMN
+        };
+        String selection = DBSchema.TableNotifBook.USERID_COLUMN + "=?";
+        String[] selArgs = { String.valueOf(userid) };
+        Cursor cursor = wdb.query(
+                DBSchema.TableNotifBook.TABLE_NAME,
+                column,
+                selection,
+                selArgs,
+                null,
+                null,
+                null
+        );
+        ArrayList<Notification> notifs = new ArrayList<>(cursor.getCount());
+
+        if(cursor.moveToLast()) {
+            do {
+                String desc = cursor.getString(cursor.getColumnIndex(DBSchema.TableNotifBook.INFO_COLUMN));
+                String date = cursor.getString(cursor.getColumnIndex(DBSchema.TableNotifBook.DATE_COLUMN));
+                String price = cursor.getString(cursor.getColumnIndex(DBSchema.TableNotifBook.PRICE_COLUMN));
+                date = Formatter.getString(date);
+                notifs.add(new Notification(date, desc, price));
+            } while (cursor.moveToPrevious());
+        }
+        cursor.close();
+        return notifs;
     }
 
 }

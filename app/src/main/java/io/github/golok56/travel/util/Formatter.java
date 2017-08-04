@@ -9,7 +9,7 @@ import java.util.Locale;
 
 public class Formatter {
 
-    private static final Locale LOCALE = new Locale("in", "ID");
+    static final Locale LOCALE = new Locale("in", "ID");
 
     private static final String DATE_FORMAT_STRING = "dd MMMM yyyy";
 
@@ -37,6 +37,17 @@ public class Formatter {
 
     public static String getString(Date date){
         return DATE_FORMAT.format(date);
+    }
+
+    public static String getString(String dateFromDb){
+        DateFormat dfFrom = new SimpleDateFormat("yyyy-MM-dd", LOCALE);
+        String newDate = "";
+        try {
+            newDate = DATE_FORMAT.format(dfFrom.parse(dateFromDb));
+        } catch (ParseException ex){
+            ex.printStackTrace();
+        }
+        return newDate;
     }
 
 }

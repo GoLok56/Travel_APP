@@ -4,10 +4,12 @@ package io.github.golok56.travel.view.fragment.nested;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,30 +125,54 @@ public class FlightsBookFragment extends Fragment {
             }
         });
 
-        Bundle bundle = getArguments();
-        final int userid = bundle.getInt(BookAdapter.USERID_EXTRA);
-
         view.findViewById(R.id.btn_fragment_flight_book_do_book).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String origin = mSpinnerOrigin.getSelectedItem().toString();
-                        String destination = mSpinnerDestination.getSelectedItem().toString();
-                        String seatClass = mSpinnerClass.getSelectedItem().toString();
-                        String date = mEtDate.getText().toString();
-                        int adult = mNpAdult.getValue();
-                        int kid = mNpKid.getValue();
+                        showConfirmDialog();
+                    }
+                }
+        );
+    }
 
-                        if(origin.equals(destination)){
-                            showToast("Pilih tujuan anda!");
-                            return;
-                        }
+    private void showConfirmDialog(){
+        final String origin = mSpinnerOrigin.getSelectedItem().toString();
+        final String destination = mSpinnerDestination.getSelectedItem().toString();
+        final String seatClass = mSpinnerClass.getSelectedItem().toString();
+        final String date = mEtDate.getText().toString();
+        final int adult = mNpAdult.getValue();
+        final int kid = mNpKid.getValue();
 
-                        String dateNow = Formatter.getString(new Date());
-                        if(date.compareTo(dateNow) < 0){
-                            showToast("Tanggal tidak valid, silakan pilih ulang!");
-                            return;
-                        }
+        if (origin.equals(destination)) {
+            showToast("Pilih tujuan anda!");
+            return;
+        }
+
+        String dateNow = Formatter.getString(new Date());
+        if (date.compareTo(dateNow) < 0) {
+            showToast("Tanggal tidak valid, silakan pilih ulang!");
+            return;
+        }
+
+        final String price = JSONUtil.getPrice(
+                mContext,
+                JSONUtil.FLIGHT_TYPE,
+                seatClass,
+                origin,
+                destination,
+                adult,
+                kid
+        );
+
+        Bundle bundle = getArguments();
+        final int userid = bundle.getInt(BookAdapter.USERID_EXTRA);
+
+        new AlertDialog.Builder(mContext)
+                .setTitle("Konfirmasi Pembookingan")
+                .setMessage("Total yang harus dibayar: " + price + ".\nTekan OK untuk menyetujui!")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
                         JSONObject book = new JSONObject();
                         try {
@@ -156,7 +182,8 @@ public class FlightsBookFragment extends Fragment {
                             book.put("tanggal", date);
                             book.put("jumlah_dewasa", adult);
                             book.put("jumlah_anak", kid);
-                        }catch (JSONException ex){
+                            book.put("jumlah_harga", price);
+                        } catch (JSONException ex) {
                             ex.printStackTrace();
                         }
 
@@ -165,15 +192,35 @@ public class FlightsBookFragment extends Fragment {
                         values.put(DBSchema.TableFlightBook.INFO_COLUMN, book.toString());
                         SQLiteDatabase wdb = mDb.getWritableDatabase();
 
-                        if(wdb.insert(DBSchema.TableFlightBook.TABLE_NAME, null, values) != -1){
-                            
+                        ContentValues notifValues = new ContentValues();
+                        String notif;
+                        if (wdb.insert(DBSchema.TableFlightBook.TABLE_NAME, null, values) != -1) {
+                            notif = "Berhasil melakukan book untuk melakukan penerbangan dari " +
+                                    origin + " menuju " + destination + " pada tanggal " +
+                                    date + ". Dengan kelas " + seatClass + ". Jumlah pembelian tiket " +
+                                    "dewasa sejumlah " + adult + " tiket dan tiket anak sejumlah " +
+                                    kid + ".";
+                            showToast("Berhasil melakukan book.");
+                        } else {
+                            notif = "Gagal melakukan book untuk melakukan penerbangan.";
+                            showToast("Terjadi kesalahan saat melakukan book.");
                         }
+                        notifValues.put(DBSchema.TableNotifBook.INFO_COLUMN, notif);
+                        notifValues.put(DBSchema.TableNotifBook.USERID_COLUMN, userid);
+                        notifValues.put(DBSchema.TableNotifBook.PRICE_COLUMN, price);
+                        wdb.insert(DBSchema.TableNotifBook.TABLE_NAME, null, notifValues);
                     }
-                }
-        );
+                })
+                .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        showToast("Batal melakukan pembookingan!");
+                    }
+                })
+                .create().show();
     }
 
-    private void showToast(String msg){
+    private void showToast(String msg) {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 

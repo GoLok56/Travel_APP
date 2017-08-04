@@ -13,22 +13,13 @@ public class BookAdapter extends FragmentStatePagerAdapter {
 
     public static final String USERID_EXTRA = "userid";
 
-    private Fragment mFlightBook;
-    private Fragment mHotelBook;
-    private Fragment mTrainBook;
+    private Bundle mBundle;
 
     public BookAdapter(FragmentManager fm, int userId) {
         super(fm);
 
-        Bundle bundle = new Bundle();
-        bundle.putInt(USERID_EXTRA, userId);
-
-        mFlightBook = new FlightsBookFragment();
-        mFlightBook.setArguments(bundle);
-        mHotelBook = new HotelBookFragment();
-        mHotelBook.setArguments(bundle);
-        mTrainBook = new TrainBookFragment();
-        mTrainBook.setArguments(bundle);
+        mBundle = new Bundle();
+        mBundle.putInt(USERID_EXTRA, userId);
     }
 
     @Override
@@ -38,10 +29,19 @@ public class BookAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0: return mFlightBook;
-            case 1: return mHotelBook;
-            case 2: return mTrainBook;
+        switch (position) {
+            case 0:
+                Fragment flightBook = new FlightsBookFragment();
+                flightBook.setArguments(mBundle);
+                return flightBook;
+            case 1:
+                Fragment hotelBook = new HotelBookFragment();
+                hotelBook.setArguments(mBundle);
+                return hotelBook;
+            case 2:
+                Fragment trainBook = new TrainBookFragment();
+                trainBook.setArguments(mBundle);
+                return trainBook;
         }
 
         return null;
@@ -49,10 +49,13 @@ public class BookAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position){
-            case 0: return FlightsBookFragment.TITLE;
-            case 1: return HotelBookFragment.TITLE;
-            case 2: return TrainBookFragment.TITLE;
+        switch (position) {
+            case 0:
+                return FlightsBookFragment.TITLE;
+            case 1:
+                return HotelBookFragment.TITLE;
+            case 2:
+                return TrainBookFragment.TITLE;
         }
         return null;
     }
