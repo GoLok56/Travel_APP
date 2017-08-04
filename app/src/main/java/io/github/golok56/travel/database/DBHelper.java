@@ -23,7 +23,14 @@ public class DBHelper extends SQLiteOpenHelper {
             DBSchema.TableUser.USERNAME_COLUMN + " TEXT UNIQUE, " +
             DBSchema.TableUser.NAME_COLUMN + " TEXT, " +
             DBSchema.TableUser.PASSWORD_COLUMN + " TEXT);";
+
+        final String createFlightTable = "CREATE TABLE " + DBSchema.TableFlightBook.TABLE_NAME + " (" +
+            DBSchema.TableFlightBook._ID + " INTEGER PRIMARY KEY, " +
+            DBSchema.TableFlightBook.USERID_COLUMN + " INTEGER, " +
+            DBSchema.TableFlightBook.INFO_COLUMN + " TEXT);";
+
          db.execSQL(createUserTable);
+         db.execSQL(createFlightTable);
     }
 
     @Override

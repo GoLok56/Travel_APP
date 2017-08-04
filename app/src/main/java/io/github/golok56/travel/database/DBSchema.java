@@ -14,4 +14,10 @@ public class DBSchema {
         public static final String PASSWORD_COLUMN = "password";
     }
 
+    public static class TableFlightBook implements BaseColumns {
+        public static final String TABLE_NAME = "flight_book";
+        public static final String USERID_COLUMN = "user_id";
+        public static final String INFO_COLUMN = "info";
+    }
+
 }

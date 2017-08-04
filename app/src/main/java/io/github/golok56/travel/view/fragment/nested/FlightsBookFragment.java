@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,9 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.text.Normalizer;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -118,23 +119,36 @@ public class FlightsBookFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         String origin = mSpinnerOrigin.getSelectedItem().toString();
-                        String destionation = mSpinnerDestination.getSelectedItem().toString();
+                        String destination = mSpinnerDestination.getSelectedItem().toString();
                         String seatClass = mSpinnerClass.getSelectedItem().toString();
                         String date = mEtDate.getText().toString();
                         int adult = mNpAdult.getValue();
                         int kid = mNpKid.getValue();
 
-                        if(origin.equals(destionation)){
+                        if(origin.equals(destination)){
                             showToast("Pilih tujuan anda!");
                             return;
                         }
 
                         String dateNow = Formatter.getString(new Date());
-                        if(date < dateNow){
+                        if(date.compareTo(dateNow) < 0){
                            showToast("Tanggal tidak valid, silakan pilih ulang!");
                             return;
                         }
 
+                        JSONObject book = new JSONObject();
+                        try {
+                            book.put("asal", origin);
+                            book.put("tujuan", destination);
+                            book.put("kelas", seatClass);
+                            book.put("tanggal", date);
+                            book.put("jumlah_dewasa", adult);
+                            book.put("jumlah_anak", kid);
+                        }catch (JSONException ex){
+                            ex.printStackTrace();
+                        }
+
+                        String json = book.toString();
                     }
                 }
         );
