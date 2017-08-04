@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import io.github.golok56.travel.R;
 import io.github.golok56.travel.adapter.BookAdapter;
+import io.github.golok56.travel.model.User;
+import io.github.golok56.travel.view.activity.LoginActivity;
 
 public class BookFragment extends Fragment {
 
@@ -32,8 +34,17 @@ public class BookFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book, container, false);
 
+        Bundle bundle = getArguments();
+        int userid = 0;
+        if(bundle != null){
+            User user = bundle.getParcelable(LoginActivity.USER_EXTRA);
+            if(user != null) {
+                userid = user.getId();
+            }
+        }
+
         ViewPager vp = (ViewPager) view.findViewById(R.id.vpager_fragment_book);
-        vp.setAdapter(new BookAdapter(getFragmentManager()));
+        vp.setAdapter(new BookAdapter(getFragmentManager(), userid));
 
         TabLayout tab = (TabLayout) view.findViewById(R.id.tab_fragment_book);
         tab.setupWithViewPager(vp);

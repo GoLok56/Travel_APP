@@ -2,7 +2,9 @@ package io.github.golok56.travel.view.fragment.nested;
 
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +26,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import io.github.golok56.travel.R;
+import io.github.golok56.travel.adapter.BookAdapter;
+import io.github.golok56.travel.database.DBHelper;
+import io.github.golok56.travel.database.DBSchema;
 import io.github.golok56.travel.util.Formatter;
 import io.github.golok56.travel.util.JSONUtil;
 
@@ -32,6 +37,8 @@ public class FlightsBookFragment extends Fragment {
     public static final String TITLE = "Penerbangan";
 
     private Context mContext;
+
+    private DBHelper mDb;
 
     private Spinner mSpinnerOrigin;
     private Spinner mSpinnerDestination;
@@ -63,6 +70,8 @@ public class FlightsBookFragment extends Fragment {
         mNpKid = (NumberPicker) view.findViewById(R.id.np_fragment_flight_book_kids_total);
 
         mContext = getContext();
+
+        mDb = new DBHelper(mContext);
 
         ArrayList<String> cityList = JSONUtil.extractCities(mContext);
         ArrayList<String> classList = JSONUtil.extractClass(mContext);
@@ -114,6 +123,9 @@ public class FlightsBookFragment extends Fragment {
             }
         });
 
+        Bundle bundle = getArguments();
+        final int userid = bundle.getInt(BookAdapter.USERID_EXTRA);
+
         view.findViewById(R.id.btn_fragment_flight_book_do_book).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -132,7 +144,7 @@ public class FlightsBookFragment extends Fragment {
 
                         String dateNow = Formatter.getString(new Date());
                         if(date.compareTo(dateNow) < 0){
-                           showToast("Tanggal tidak valid, silakan pilih ulang!");
+                            showToast("Tanggal tidak valid, silakan pilih ulang!");
                             return;
                         }
 
@@ -148,7 +160,14 @@ public class FlightsBookFragment extends Fragment {
                             ex.printStackTrace();
                         }
 
-                        String json = book.toString();
+                        ContentValues values = new ContentValues();
+                        values.put(DBSchema.TableFlightBook.USERID_COLUMN, userid);
+                        values.put(DBSchema.TableFlightBook.INFO_COLUMN, book.toString());
+                        SQLiteDatabase wdb = mDb.getWritableDatabase();
+
+                        if(wdb.insert(DBSchema.TableFlightBook.TABLE_NAME, null, values) != -1){
+                            
+                        }
                     }
                 }
         );

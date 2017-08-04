@@ -98,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         SQLiteDatabase wdb = mDb.getWritableDatabase();
 
         String[] columns = {
+                DBSchema.TableUser._ID,
                 DBSchema.TableUser.EMAIL_COLUMN,
                 DBSchema.TableUser.NAME_COLUMN
         };
@@ -115,8 +116,9 @@ public class LoginActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             String email = cursor.getString(cursor.getColumnIndex(DBSchema.TableUser.EMAIL_COLUMN));
             String name = cursor.getString(cursor.getColumnIndex(DBSchema.TableUser.NAME_COLUMN));
+            int id = cursor.getInt(cursor.getColumnIndex(DBSchema.TableUser._ID));
             cursor.close();
-            return new User(email, username, name, password);
+            return new User(id, email, username, name, password);
         } else {
             cursor.close();
             return null;

@@ -29,8 +29,13 @@ public class DBHelper extends SQLiteOpenHelper {
             DBSchema.TableFlightBook.USERID_COLUMN + " INTEGER, " +
             DBSchema.TableFlightBook.INFO_COLUMN + " TEXT);";
 
+        final String createNotifTable = "CREATE TABLE " + DBSchema.TableNotifBook.TABLE_NAME + " (" +
+            DBSchema.TableFlightBook._ID + " INTEGER PRIMARY KEY, " +
+            DBSchema.TableFlightBook.INFO_COLUMN + " TEXT);";
+
          db.execSQL(createUserTable);
          db.execSQL(createFlightTable);
+         db.execSQL(createNotifTable);
     }
 
     @Override

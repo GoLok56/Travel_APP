@@ -14,12 +14,16 @@ import io.github.golok56.travel.view.fragment.ProfileFragment;
 public class DashboardAdapter extends FragmentStatePagerAdapter {
 
     private Fragment mProfileFragment;
+    private Fragment mBookFragment;
 
     public DashboardAdapter(FragmentManager fm, User user) {
         super(fm);
 
         Bundle bundle = new Bundle();
         bundle.putParcelable(LoginActivity.USER_EXTRA, user);
+
+        mBookFragment = BookFragment.getInstance();
+        mBookFragment.setArguments(bundle);
 
         mProfileFragment = ProfileFragment.getInstance();
         mProfileFragment.setArguments(bundle);
@@ -36,7 +40,7 @@ public class DashboardAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return mProfileFragment;
             case 1:
-                return BookFragment.getInstance();
+                return mBookFragment;
             case 2:
                 return NotifFragment.getInstance();
         }
