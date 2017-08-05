@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -20,16 +21,8 @@ public class TrainBookFragment extends Fragment {
 
     public static final String TITLE = "Kereta";
 
-    private static TrainBookFragment sInstance;
-
-    public static TrainBookFragment getInstance(){
-        if(sInstance == null){
-            sInstance = new TrainBookFragment();
-        }
-        return sInstance;
+    public TrainBookFragment() {
     }
-
-    public TrainBookFragment() {}
 
 
     @Override
@@ -42,12 +35,12 @@ public class TrainBookFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Context context = getContext();
+        final Context context = getContext();
 
         ArrayList<String> cityList = JSONUtil.extractCities(context);
         ArrayList<String> classList = JSONUtil.extractClass(context);
 
-        if(cityList != null) {
+        if (cityList != null) {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, cityList);
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
 
@@ -58,7 +51,7 @@ public class TrainBookFragment extends Fragment {
                     .setAdapter(adapter);
         }
 
-        if(classList != null){
+        if (classList != null) {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, classList);
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
 
@@ -74,5 +67,11 @@ public class TrainBookFragment extends Fragment {
         npKid.setMinValue(0);
         npKid.setMaxValue(10);
 
+        view.findViewById(R.id.btn_fragment_train_book_do_book).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Coming Soon!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

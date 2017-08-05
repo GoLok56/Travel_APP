@@ -42,7 +42,7 @@
         tools:text="hakshajk@roket.com" />
 
     <TextView
-        android:id="@+id/tv_fragment_profile_edit_profile"
+        android:id="@+id/tv_fragment_profile_my_book"
         style="@style/hyperlink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,14 +57,14 @@
         android:paddingRight="@dimen/std_hyperlink_padding"
         android:paddingStart="0dp"
         android:paddingTop="@dimen/std_hyperlink_padding"
-        android:text="@string/fragment_profile_edit_profile_label" />
+        android:text="@string/fragment_profile_my_book_label" />
 
     <TextView
         android:id="@+id/tv_fragment_profile_logout"
         style="@style/hyperlink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_fragment_profile_edit_profile"
+        android:layout_below="@id/tv_fragment_profile_my_book"
         android:layout_marginTop="@dimen/margin_2_hyperlink"
         android:layout_toEndOf="@id/iv_fragment_profile_prof_pic"
         android:layout_toRightOf="@id/iv_fragment_profile_prof_pic"

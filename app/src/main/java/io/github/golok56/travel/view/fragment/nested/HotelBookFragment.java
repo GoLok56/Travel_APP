@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,16 +22,7 @@ public class HotelBookFragment extends Fragment {
 
     public static final String TITLE = "Hotel";
 
-    private static HotelBookFragment sInstance;
-
     public HotelBookFragment() {}
-
-    public static HotelBookFragment getInstance(){
-        if (sInstance == null){
-            sInstance = new HotelBookFragment();
-        }
-        return sInstance;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,7 +33,7 @@ public class HotelBookFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Context context = getContext();
+        final Context context = getContext();
 
         ArrayList<String> cityList = JSONUtil.extractCities(context);
 
@@ -60,5 +52,12 @@ public class HotelBookFragment extends Fragment {
         NumberPicker npRoom = (NumberPicker) view.findViewById(R.id.np_fragment_hotel_book_total_room);
         npRoom.setMinValue(1);
         npRoom.setMaxValue(5);
+
+        view.findViewById(R.id.btn_fragment_hotel_book_do_book).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Coming Soon!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

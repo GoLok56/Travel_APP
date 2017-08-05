@@ -30,7 +30,7 @@
     <string name="activity_forget_password_hint">Masukkan username anda</string>
 
     <string name="fragment_profile_pp_label">Profile Picture</string>
-    <string name="fragment_profile_edit_profile_label">Edit Profile</string>
+    <string name="fragment_profile_my_book_label">My Book</string>
     <string name="fragment_profile_logout_label">Logout</string>
 
     <string name="notif_not_found_label">Tidak ada pemberitahuan!</string>
