@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import io.github.golok56.travel.R;
 import io.github.golok56.travel.adapter.NotificationAdapter;
@@ -37,7 +39,8 @@ public class NotifFragment extends Fragment {
 
     private int mUserId;
 
-    public NotifFragment() {}
+    public NotifFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,10 +68,16 @@ public class NotifFragment extends Fragment {
         refresh();
     }
 
-    public void refresh(){
+    public void refresh() {
         ArrayList<Notification> notifs = getNotifs(mUserId);
+        Collections.sort(notifs, new Comparator<Notification>() {
+            @Override
+            public int compare(Notification notif1, Notification notif2) {
+                return notif1.getDesc().compareTo(notif2.getDesc());
+            }
+        });
 
-        if(notifs.size() == 0) {
+        if (notifs.size() == 0) {
             mTvNotFound.setVisibility(View.VISIBLE);
             mLvNotif.setVisibility(View.GONE);
         } else {
@@ -79,7 +88,7 @@ public class NotifFragment extends Fragment {
         }
     }
 
-    private ArrayList<Notification> getNotifs(int userid){
+    private ArrayList<Notification> getNotifs(int userid) {
         SQLiteDatabase wdb = mDb.getWritableDatabase();
         String[] column = {
                 DBSchema.TableNotifBook.DATE_COLUMN,
@@ -87,7 +96,7 @@ public class NotifFragment extends Fragment {
                 DBSchema.TableNotifBook.PRICE_COLUMN
         };
         String selection = DBSchema.TableNotifBook.USERID_COLUMN + "=?";
-        String[] selArgs = { String.valueOf(userid) };
+        String[] selArgs = {String.valueOf(userid)};
         Cursor cursor = wdb.query(
                 DBSchema.TableNotifBook.TABLE_NAME,
                 column,
@@ -99,15 +108,14 @@ public class NotifFragment extends Fragment {
         );
         ArrayList<Notification> notifs = new ArrayList<>(cursor.getCount());
 
-        if(cursor.moveToLast()) {
-            do {
-                String desc = cursor.getString(cursor.getColumnIndex(DBSchema.TableNotifBook.INFO_COLUMN));
-                String date = cursor.getString(cursor.getColumnIndex(DBSchema.TableNotifBook.DATE_COLUMN));
-                String price = cursor.getString(cursor.getColumnIndex(DBSchema.TableNotifBook.PRICE_COLUMN));
-                date = Formatter.getString(date);
-                notifs.add(new Notification(date, desc, price));
-            } while (cursor.moveToPrevious());
+        while (cursor.moveToNext()) {
+            String desc = cursor.getString(cursor.getColumnIndex(DBSchema.TableNotifBook.INFO_COLUMN));
+            String date = cursor.getString(cursor.getColumnIndex(DBSchema.TableNotifBook.DATE_COLUMN));
+            String price = cursor.getString(cursor.getColumnIndex(DBSchema.TableNotifBook.PRICE_COLUMN));
+            date = Formatter.getString(date);
+            notifs.add(new Notification(date, desc, price));
         }
+
         cursor.close();
         return notifs;
     }

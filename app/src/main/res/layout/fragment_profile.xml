@@ -50,7 +50,6 @@
         android:layout_marginTop="@dimen/std_margin"
         android:layout_toEndOf="@id/iv_fragment_profile_prof_pic"
         android:layout_toRightOf="@id/iv_fragment_profile_prof_pic"
-        android:clickable="true"
         android:paddingBottom="@dimen/std_hyperlink_padding"
         android:paddingEnd="@dimen/std_hyperlink_padding"
         android:paddingLeft="0dp"
