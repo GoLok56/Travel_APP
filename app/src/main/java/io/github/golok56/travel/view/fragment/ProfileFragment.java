@@ -18,16 +18,17 @@ public class ProfileFragment extends Fragment {
 
     public static final String TITLE = "Profile";
 
-    public ProfileFragment() {}
+    public ProfileFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        User user = getArguments().getParcelable(LoginActivity.USER_EXTRA);
+        final User user = getArguments().getParcelable(LoginActivity.USER_EXTRA);
 
-        if(user != null) {
+        if (user != null) {
             TextView etName = (TextView) view.findViewById(R.id.tv_fragment_profile_user_full_name);
             etName.setText(user.getName());
 
@@ -35,18 +36,16 @@ public class ProfileFragment extends Fragment {
             etEmail.setText(user.getEmail());
         }
 
-        TextView tvLogout = (TextView) view.findViewById(R.id.tv_fragment_profile_logout);
-        tvLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences pref = getActivity()
-                        .getSharedPreferences(PreferenceManager.PREF_NAME, Context.MODE_PRIVATE);
-                pref.edit().putBoolean(PreferenceManager.IS_LOGIN, false).apply();
-                startActivity(LoginActivity.getIntent(getActivity()));
-            }
-        });
-
-        // TODO : Implement OnClickListener for Edit Profile label
+        view.findViewById(R.id.tv_fragment_profile_logout)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        SharedPreferences pref = getActivity()
+                                .getSharedPreferences(PreferenceManager.PREF_NAME, Context.MODE_PRIVATE);
+                        pref.edit().putBoolean(PreferenceManager.IS_LOGIN, false).apply();
+                        startActivity(LoginActivity.getIntent(getActivity()));
+                    }
+                });
 
         return view;
     }
