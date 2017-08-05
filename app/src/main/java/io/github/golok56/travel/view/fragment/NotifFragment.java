@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class NotifFragment extends Fragment {
     public static final String TITLE = "Notification";
 
     private ListView mLvNotif;
+    private TextView mTvNotFound;
 
     private DBHelper mDb;
 
@@ -58,14 +60,23 @@ public class NotifFragment extends Fragment {
         }
 
         mLvNotif = (ListView) view.findViewById(R.id.lv_fragment_notif_list_notif);
+        mTvNotFound = (TextView) view.findViewById(R.id.tv_fragment_notif_not_found_desc);
+
         refresh();
     }
 
     public void refresh(){
         ArrayList<Notification> notifs = getNotifs(mUserId);
 
-        NotificationAdapter adapter = new NotificationAdapter(mContext, notifs);
-        mLvNotif.setAdapter(adapter);
+        if(notifs.size() == 0) {
+            mTvNotFound.setVisibility(View.VISIBLE);
+            mLvNotif.setVisibility(View.GONE);
+        } else {
+            NotificationAdapter adapter = new NotificationAdapter(mContext, notifs);
+            mLvNotif.setVisibility(View.VISIBLE);
+            mTvNotFound.setVisibility(View.GONE);
+            mLvNotif.setAdapter(adapter);
+        }
     }
 
     private ArrayList<Notification> getNotifs(int userid){

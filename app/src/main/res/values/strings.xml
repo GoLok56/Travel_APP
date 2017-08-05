@@ -33,6 +33,8 @@
     <string name="fragment_profile_edit_profile_label">Edit Profile</string>
     <string name="fragment_profile_logout_label">Logout</string>
 
+    <string name="notif_not_found_label">Tidak ada pemberitahuan!</string>
+
     <string name="notif_icon_label">Notification Icon</string>
     <string name="total_price_label">Total Harga</string>
 
